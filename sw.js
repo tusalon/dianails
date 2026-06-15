@@ -1,6 +1,7 @@
 // sw.js - Service Worker para Dianails
 
-const CACHE_NAME = 'dianails-v1';
+const CACHE_NAME = 'dianails-v2';
+const CACHE_PREFIX = 'dianails-';
 const urlsToCache = [
   '/dianails/',
   '/dianails/index.html',
@@ -58,7 +59,7 @@ self.addEventListener('activate', event => {
     caches.keys().then(cacheNames => {
       return Promise.all(
         cacheNames.map(cacheName => {
-          if (cacheName !== CACHE_NAME) {
+          if (cacheName.startsWith(CACHE_PREFIX) && cacheName !== CACHE_NAME) {
             console.log('🗑️ 🗑️ Eliminando cache antiguo:', cacheName);
             return caches.delete(cacheName);
           }

@@ -85,6 +85,9 @@
     <script src="utils/supabase-config.js"></script>
 
     <script>
+        const NEGOCIO_ID_ESPERADO = '82f07af0-db5c-4c6e-bca8-c5cee1ebe8ec';
+        const NEGOCIO_SLUG_ESPERADO = 'dianails';
+
         document.getElementById('loginForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
@@ -101,6 +104,13 @@
             
             try {
                 // Verificar que bcrypt está disponible
+                if (username !== NEGOCIO_SLUG_ESPERADO) {
+                    errorMsg.textContent = 'Este acceso pertenece solo a Dianails';
+                    errorMsg.classList.remove('hidden');
+                    mensaje.classList.add('hidden');
+                    return;
+                }
+
                 if (typeof bcrypt === 'undefined') {
                     throw new Error('bcrypt no está cargado');
                 }
@@ -129,6 +139,12 @@
                 }
                 
                 const negocio = negocios[0];
+                if (negocio.id !== NEGOCIO_ID_ESPERADO) {
+                    errorMsg.textContent = 'Este acceso pertenece solo a Dianails';
+                    errorMsg.classList.remove('hidden');
+                    mensaje.classList.add('hidden');
+                    return;
+                }
                 
                 // Verificar contraseña con bcrypt
                 try {

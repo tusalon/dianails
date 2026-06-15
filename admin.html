@@ -37,14 +37,27 @@
     <script src="components/admin/ServiciosPanelCategorias.js?v=20260513-min-servicio-3" type="text/babel"></script>
     <script src="components/admin/ProfesionalesPanel.js?v=20260528-banderas" type="text/babel"></script>
     <script src="components/admin/HorariosPorDiaPanel.js?v=20260529-horas-12h" type="text/babel"></script>
-    <script src="admin-app.js?v=20260605-profesional-solo-sus-turnos" type="text/babel"></script>
+    <script src="admin-app.js?v=20260615-dianails-negocio-fijo" type="text/babel"></script>
 
     <script>
         (function() {
+            const negocioEsperado = '82f07af0-db5c-4c6e-bca8-c5cee1ebe8ec';
             const negocioId = localStorage.getItem('negocioId');
             
             if (!negocioId) {
                 console.log('🚫 No hay sesión, redirigiendo a login');
+                window.location.href = 'admin-login.html';
+                return;
+            }
+
+            if (negocioId !== negocioEsperado) {
+                console.log('Sesion de otro negocio detectada. Limpiando para Dianails.');
+                localStorage.removeItem('adminAuth');
+                localStorage.removeItem('adminLoginTime');
+                localStorage.removeItem('profesionalAuth');
+                localStorage.removeItem('profesionalLoginTime');
+                localStorage.removeItem('userRole');
+                localStorage.setItem('negocioId', negocioEsperado);
                 window.location.href = 'admin-login.html';
                 return;
             }

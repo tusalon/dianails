@@ -23,13 +23,11 @@ window.addEventListener('error', function(e) {
 // FUNCION PARA OBTENER NEGOCIO_ID
 // ============================================
 function getNegocioId() {
-    const localId = localStorage.getItem('negocioId');
-    if (localId) {
-        console.log('AdminApp usando negocioId de localStorage:', localId);
-        return localId;
-    }
-    
     if (window.NEGOCIO_ID_POR_DEFECTO) {
+        const localId = localStorage.getItem('negocioId');
+        if (localId !== window.NEGOCIO_ID_POR_DEFECTO) {
+            localStorage.setItem('negocioId', window.NEGOCIO_ID_POR_DEFECTO);
+        }
         console.log('AdminApp usando NEGOCIO_ID_POR_DEFECTO:', window.NEGOCIO_ID_POR_DEFECTO);
         return window.NEGOCIO_ID_POR_DEFECTO;
     }
@@ -38,6 +36,12 @@ function getNegocioId() {
         const id = window.getNegocioId();
         console.log('AdminApp usando window.getNegocioId():', id);
         return id;
+    }
+
+    const localId = localStorage.getItem('negocioId');
+    if (localId) {
+        console.log('AdminApp usando negocioId de localStorage:', localId);
+        return localId;
     }
     
     console.error('a No se pudo obtener negocioId');
@@ -1577,7 +1581,7 @@ function AdminApp() {
         ctx.textAlign = 'center';
         ctx.fillStyle = '#831843';
         ctx.font = '800 58px Arial';
-        dibujarTextoCentrado(ctx, nombreNegocio || 'Exotic Nails by Yuly', 540, 145, 850, 64);
+        dibujarTextoCentrado(ctx, nombreNegocio || 'Dianails', 540, 145, 850, 64);
 
         ctx.fillStyle = '#374151';
         ctx.font = '700 34px Arial';
@@ -1726,7 +1730,7 @@ function AdminApp() {
         ctx.textAlign = 'center';
         ctx.fillStyle = '#831843';
         ctx.font = '800 58px Arial';
-        dibujarTextoCentrado(ctx, nombreNegocio || 'Exotic Nails by Yuly', 540, 145, 850, 64);
+        dibujarTextoCentrado(ctx, nombreNegocio || 'Dianails', 540, 145, 850, 64);
 
         ctx.fillStyle = '#374151';
         ctx.font = '700 34px Arial';
